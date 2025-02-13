@@ -1,103 +1,14 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { FaSpinner, FaCheckCircle, FaEye } from "react-icons/fa";
-
+import {axiosInstance} from '../util/axios'
 
 
 const MovieGallery = () => {
 
   const [filter, setFiler] = useState("")
-  const [movies, setMovies] = useState(
-    [
-      {
-        id: 1,
-        title: "Mufasa: El rey león",
-        poster: "https://pics.filmaffinity.com/mufasa_the_lion_king-600247674-mmed.jpg",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: false,
-        watchedOn: "2025-05-15"
-
-      },
-
-      {
-        id: 2,
-        title: "The Brutalist",
-        poster: "https://pics.filmaffinity.com/the_brutalist-339944470-mmed.jpg",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: true,
-        watchedOn: "2025-05-15"
-
-      },
-
-      {
-        id: 3,
-        title: "Conclave",
-        poster: "https://pics.filmaffinity.com/conclave-496920745-large.jpg",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: true,
-        watchedOn: "2025-05-15"
-
-      },
-
-      {
-        id: 4,
-        title: "La acompañante",
-        poster: "https://pics.filmaffinity.com/companion-438784716-mmed.jpg",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: true,
-        watchedOn: null
-
-      },
-
-      {
-        id: 5,
-        title: "Maria Calas",
-        poster: "",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: false,
-        watchedOn: null
-
-      },
-
-      {
-        id: 6,
-        title: "Mikaela",
-        poster: "",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: false,
-        watchedOn: null
-
-      },
-
-      {
-        id: 7,
-        title: "Septiembre 5",
-        poster: "",
-        cinema: "Cinesa Moraleja Green",
-        releasedDate: "2010-07-16",
-        genre: "Action, Adventure, Sci-Fi",
-        watched: false,
-        watchedOn: null
-
-      },
 
 
-
-
-
-    ]
-  )
+  const [movies, setMovies] = useState([])
 
   const handleFilterChange = (filter) => () => {
     console.log('')
@@ -133,6 +44,30 @@ const MovieGallery = () => {
     if (filter === "toWatch") return !movie.watched
     return true
   })
+
+  const  getMovies = async () => {
+    
+    try {
+      
+      const movies = await axiosInstance.get('/movies/all-movies')
+      console.log('movies: ', movies)
+      setMovies(movies.data)
+      
+    } catch (error) {
+      console.log('error leyendo movies : ', error)      
+    }
+    
+
+  }
+
+
+  useEffect(() => {
+    console.log('axios instance: ', axiosInstance)
+    getMovies()
+  }, [])
+  
+
+  console.log('entorno: ', process.env.NODE_ENV)
   
   return (
 
