@@ -19,9 +19,12 @@ const MovieGallery = () => {
   // Actualizado si la película ha sido vista o no
   // Recorro el array de peliculas con un map, si la encuentro actualizo el campo watched, si no devuelve la pelicula. 
   const handleWatchedToggle = (id) => () => {
+    
+    console.log('id = ', id)
+    
     setMovies((prevMovies) => {
       return prevMovies.map((movie) => {
-        if (movie.id === id) {
+        if (movie._id === id) {
           return {
             ...movie,
             watched: !movie.watched,
@@ -105,7 +108,7 @@ const MovieGallery = () => {
         {/* Galeria de películas */}
          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
          {filteredMovies.map((movie) => (
-          <div key={movie.id}
+          <div key={movie._id}
             className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105"
           >
             <img src={movie.poster} 
@@ -129,7 +132,7 @@ const MovieGallery = () => {
 {/* Toggle: Vista | no vista */}
               <div className='flex justify-between items-center'>
                 <button
-                  onClick={handleWatchedToggle(movie.id)}
+                  onClick={handleWatchedToggle(movie._id)}
                   className={`px-4 py-2 rounded-full ${movie.watched ? 'bg-green-500 text-white' : 'bg-yellow-500 text-white'}`}
                 >
                     
