@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
-import { FaSpinner, FaCheckCircle, FaEye } from "react-icons/fa";
+import { FaSpinner, FaCheckCircle, FaEye, FaPlus} from "react-icons/fa";
 import {axiosInstance} from '../util/axios'
-
+import borrar_icon from '../assets/borrar_icon.svg'
 
 const MovieGallery = () => {
 
@@ -39,7 +39,17 @@ const MovieGallery = () => {
   
   }
 
-
+  const handleDeleteMovie = (id) => async () => {
+    try {
+      const movie = await axiosInstance.delete(`movies/${id}`)        
+      if(movie.status === 200){
+        getMovies()
+      }
+    } catch (error) {
+      console.log('error borrando película: ', error)
+    }
+    
+  } 
 
   // Filtra las peliculas por su estado. 
   const filteredMovies = movies.filter((movie) => {
@@ -53,8 +63,16 @@ const MovieGallery = () => {
     try {
       
       const movies = await axiosInstance.get('/movies/all-movies')
-      console.log('movies: ', movies)
-      setMovies(movies.data)
+      const moviesUpdated = movies.data.map((movie) => {
+        return {
+          ...movie,
+          // Convierte la fecha a formato dd mes (abreviado) año
+          releasedDate: new Date (movie.releasedDate).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+        }
+      })
+
+      console.log('moviesUpdated: ', moviesUpdated)
+      setMovies(moviesUpdated)
       
     } catch (error) {
       console.log('error leyendo movies : ', error)      
@@ -70,12 +88,18 @@ const MovieGallery = () => {
   }, [])
   
 
-  console.log('entorno: ', process.env.NODE_ENV)
+  
   
   return (
 
-    <div className='container mx-auto px-4 py-8'>        
-        <h1 className='text-3xl font-bold text-center mb-8 '> Peliculas favoritas</h1>        
+    <div className='container mx-auto px-4 py-8 '>        
+        <header className='bg-blue-600 text-white p-4 mb-8 flex justify-between items-center'> 
+          <h1 className='text-3xl font-bold text-center '> Peliculas favoritas</h1>  
+          <button className='bg-green-500 text-white px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105'>          
+            <a href="/new-movie"> <FaPlus  className='h-6 w-6'/> </a>
+          </button>
+        </header>
+                
         {/* Botones de filtro */}
         <div className='flex justify-center space-x-4 mb-8'>
           
@@ -116,7 +140,13 @@ const MovieGallery = () => {
             className='w-full h-64 object-cover'
             />
             <div className="p-6">
+              <div className='flex justify-between items-center'>
+              
               <h2 className='text-2xl font-bold mb-2'>{movie.title}</h2>
+              <button onClick={handleDeleteMovie(movie._id)}>
+                <img src={borrar_icon} alt='Borrar película' className='h-6 w-6 ' />
+               </button>
+              </div>
               
               <p className='text-gray-600 mb-2'>
                 <span className='font-semibold'>Cine:</span> {movie.cinema}
