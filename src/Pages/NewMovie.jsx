@@ -1,54 +1,76 @@
 import React, { useState, useRef, useEffect} from 'react'
 import { TbReceiptYen } from 'react-icons/tb';
 import { axiosInstance } from '../util/axios';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
-const NewMovie = () => {
-
-    
+const NewMovie = () => {    
 
     const [errors, setErrors] = useState({ title: '', cinema: '', releasedDate: '', genre: ''  });
-    const [data, setData] = useState({ title: '', cinema: '', releasedDate: '', genre: ''  });
+    const [data, setData] = useState({ title: '', cinema: '', releasedDate: '', genre: '', poster: '' });
     const [disableSubmit, setDisableSubmit] = useState(true);
+    const [fileName, setFileName] = useState('');
 
     const fileInputRef = useRef(null)
+    const navigate = useNavigate();
     
     
     // Para habiliar el boton guardar se comprueba cada vez que cambia data. 
     useEffect(() => {
         // Object.values(data) devuelve un array con los valores de las propiedades de data
         // every() devuelve true si todos los elementos del array cumplen la condición
+        
+        console.log('Object.values(data)', Object.values(data));
+        
+        
         const allFieldsFilled = Object.values(data).every(field => field !== '');
         setDisableSubmit(!allFieldsFilled);
+
+
+
     }, [data]);
 
     const handleSubmit = async (e) => {        
         e.preventDefault()
 
+        
 
         try {
-            const movies = await axiosInstance.post('/movies', data)    
+            console.log('entro en el try')
+            // const movies = await axiosInstance.post('/movies/', data)    
+
+            const movies = await axios.post('http://localhost:3002/movies/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                
+            })
+            
             console.log('pelicula dada de alta: ', movies)
+            alert('Pelicula dada de alta correctamente')
+            navigate('/')
             
         } catch (error) {
-            console.log('error al dar de alta la pelicula: ', error.response.data.message)            
+            console.log('entro en el catch')
+            console.log('error al dar de alta la pelicula: ', error)            
         }
 
     }
 
     const handleChange = (e) => {
 
+        // console.log('e.target.name = ', e.target.name)
+        // console.log('e.target.value = ', e.target.value)
+        // // console.log('e.target.files[0] ', e.target.files[0]) 
+
         const { name, value } = e.target
-
-        console.log('he cambiado el valor del campo ', name)
-        console.log('he cambiado el valor ', value)
-
         switch (name) {
             
             case "title":
                 if (e.target.value.length < 3) {
                     setErrors({...errors, title: 'El título debe tener al menos 3 caracteres'})
-                    console.log('error: ', errors)
+                    
                 } else {
                     setErrors({...errors, title: ''})
                     setData({...data, title: e.target.value})
@@ -59,10 +81,10 @@ const NewMovie = () => {
                 if (value.length === 0) {
                     setErrors({...errors, cinema: 'Debes seleccionar un cine'})
                 } else {
-                    console.log('cine seleccionado: ', value)
+                    
                     setErrors({...errors, cinema: ''})
                     setData({...data, cinema: e.target.value})
-                    console.log('data: ', data)
+                    
                 }
                 break;
 
@@ -84,28 +106,23 @@ const NewMovie = () => {
                 }
                 break;
             
-                default:
+            case "poster":
+                console.log('e.target.files[0] ', e.target.files[0]);
+
+                const fileName = e.target.files[0].name 
+                
+                setData({...data, poster: e.target.files[0]})
+                setFileName(fileName)
+                break;
+            
+            default:
                     break;
         
 
             }
 
-            console.log('data ', data)
+            
 
-            setDisableSubmit(false)            
-            console.log('disableSubmit before ', disableSubmit)
-
-            for (const key in data) {
-
-                console.log('key: ', key)
-                console.log('data[key]: ', data[key])
-
-                if (data[key] === '') {
-                    setDisableSubmit(true)
-                }
-            }
-
-            console.log('disableSubmit despues ', disableSubmit)
 
     }
 
@@ -131,19 +148,20 @@ const NewMovie = () => {
                     
                     <input 
                         type="file" 
-                        name='photo' 
+                        name='poster' 
                         accept='image/*' 
                         onChange={handleChange} 
                         className='hidden'
                         ref={fileInputRef}
                     />    
-                    <button
+                      <button
                         onClick={handleUploadPhoto}
                         className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
                     >
                         Subir foto
-                        </button>                
-                    <span className='text-red-500'> {errors.poster &&  errors.poster} </span>
+                        </button>                 
+                    <span> {fileName} </span>
+                    <span className='text-red-500'> {errors.poster &&  errors.poster} </span> 
                 </div>
     {/* Title */}            
                 <div>

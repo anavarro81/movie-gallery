@@ -1,26 +1,25 @@
 import React, {useState, useEffect} from 'react'
 import { FaSpinner, FaCheckCircle, FaEye, FaPlus} from "react-icons/fa";
 import {axiosInstance} from '../util/axios'
+
 import borrar_icon from '../assets/borrar_icon.svg'
 
 const MovieGallery = () => {
 
   const [filter, setFiler] = useState("")
-
-
   const [movies, setMovies] = useState([])
 
-  const handleFilterChange = (filter) => () => {
-    console.log('')
-    setFiler(filter)
-  
+  const handleFilterChange = (filter) => () => {    
+    setFiler(filter)  
   }
+
+  
   
   // Actualizado si la película ha sido vista o no
   // Recorro el array de peliculas con un map, si la encuentro actualizo el campo watched, si no devuelve la pelicula. 
   const handleWatchedToggle = (id) => () => {
     
-    console.log('id = ', id)
+    
     
     setMovies((prevMovies) => {
       return prevMovies.map((movie) => {
@@ -83,7 +82,7 @@ const MovieGallery = () => {
 
 
   useEffect(() => {
-    console.log('axios instance: ', axiosInstance)
+    
     getMovies()
   }, [])
   
