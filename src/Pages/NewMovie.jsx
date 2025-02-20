@@ -40,7 +40,7 @@ const NewMovie = () => {
             console.log('entro en el try')
             // const movies = await axiosInstance.post('/movies/', data)    
 
-            const movies = await axios.post('http://localhost:3002/movies/', data, {
+            const movies = await axiosInstance.post('/movies/', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },
