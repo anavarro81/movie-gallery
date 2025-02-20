@@ -62,6 +62,10 @@ const MovieGallery = () => {
     try {
       
       const movies = await axiosInstance.get('/movies/all-movies')
+
+      console.log('Me conecto usando: ', axiosInstance.defaults.baseURL)     
+
+
       const moviesUpdated = movies.data.map((movie) => {
         return {
           ...movie,
