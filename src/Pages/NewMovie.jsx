@@ -141,7 +141,7 @@ const NewMovie = () => {
     
             {/* {showModal  && <Modal message={modalState.message} showModal={setShowModal}/>}     */}
     
-            <h2 className="text-2xl font-bold mb-6"> NUEVA PELICULA </h2>
+            <h2 className="text-2xl font-bold mb-6"> NUEVA PELíCULA </h2>
             <form onSubmit={handleSubmit} id='newSitForm' className="space-y-4">
     {/* photo */}            
                 <div className='flex flex-col'> 
@@ -190,7 +190,7 @@ const NewMovie = () => {
                 <div>
                 <label htmlFor="genre" className='block'> Género </label>
                         <select name="genre" id="" onChange={handleChange} className='mt-1 block w-full border py-2 px-2'>
-                        <option value=""> Selecciona el genero de la película </option>
+                        <option value=""> Selecciona el género de la película </option>
                         <option value="Acción"> Acción </option>
                         <option value="Aventura"> Aventura </option>                        
                         <option value="Ciencia Ficción"> Ciencia Ficción </option>
