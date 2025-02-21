@@ -188,7 +188,7 @@ const NewMovie = () => {
 
     {/* genero */}
                 <div>
-                <label htmlFor="genre" className='block'> Genero </label>
+                <label htmlFor="genre" className='block'> Género </label>
                         <select name="genre" id="" onChange={handleChange} className='mt-1 block w-full border py-2 px-2'>
                         <option value=""> Selecciona el genero de la película </option>
                         <option value="Acción"> Acción </option>

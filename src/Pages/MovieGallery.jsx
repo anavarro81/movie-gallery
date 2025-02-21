@@ -97,7 +97,7 @@ const MovieGallery = () => {
 
     <div className='container mx-auto px-4 py-8 '>        
         <header className='bg-blue-600 text-white p-4 mb-8 flex justify-between items-center'> 
-          <h1 className='text-3xl font-bold text-center '> Peliculas favoritas</h1>  
+          <h1 className='text-3xl font-bold text-center '> Películas favoritas</h1>  
           <button className='bg-green-500 text-white px-4 py-2 rounded-full transition-transform duration-300 hover:scale-105'>          
             <a href="/new-movie"> <FaPlus  className='h-6 w-6'/> </a>
           </button>
