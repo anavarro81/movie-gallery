@@ -35,9 +35,14 @@ const NewMovie = () => {
         e.preventDefault()
 
         
+        // Se desactiva el alta de pelicula en producción
+        if (import.meta.env.PROD) {
+            alert('Alta de pelicula desactivada en producción')
+            navigate('/')
+        }
 
         try {
-            console.log('entro en el try')
+            
             // const movies = await axiosInstance.post('/movies/', data)    
 
             const movies = await axiosInstance.post('/movies/', data, {
