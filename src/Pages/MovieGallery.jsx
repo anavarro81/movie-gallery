@@ -39,6 +39,13 @@ const MovieGallery = () => {
   }
 
   const handleDeleteMovie = (id) => async () => {
+
+    if (import.meta.env.PROD) {
+      alert('Borrado de pelicula desactivado en producción')
+      return
+    }
+
+
     try {
       const movie = await axiosInstance.delete(`movies/${id}`)        
       if(movie.status === 200){
