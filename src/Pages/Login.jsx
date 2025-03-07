@@ -103,14 +103,6 @@ const Login = () => {
             <form className='space-y-4 ' onSubmit={handlesubmit}> 
 
 
-                <div>
-                <label htmlFor="name" className='block text-sm font-medium text-gray-700'> Nombre </label>
-                    <input 
-                        name="name" 
-                        class="mt-1 block w-full px-3 py-2 border" type="text" placeholder='tu nombre '
-                        onChange={handleChange}
-                        />                    
-                </div>
                 
                 {/* email */}
                 <div> 
