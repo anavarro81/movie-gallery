@@ -4,7 +4,7 @@ import {axiosInstance} from '../util/axios'
 import Header from '../Components/Header'
 import borrar_icon from '../assets/borrar_icon.svg'
 import NoLogin from './NoLogin'
-import { useToken } from '../Providers/tokenProvider';
+import { useToken } from '../Providers/TokenProvider';
 
 
 const MovieGallery = () => {

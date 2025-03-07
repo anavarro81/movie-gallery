@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { IoAlertOutline } from "react-icons/io5";
-import {useToken} from '../Providers/tokenProvider'
+import {useToken} from '../Providers/TokenProvider'
 import {useNavigate} from 'react-router-dom'
 
 import Header from '../Components/Header'

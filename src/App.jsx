@@ -3,7 +3,7 @@ import NewMovie from "./Pages/NewMovie"
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import {TokenProvider} from "./Providers/tokenProvider"
+import {TokenProvider} from "./Providers/TokenProvider"
 
 export default function App() {
 
