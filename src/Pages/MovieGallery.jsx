@@ -11,7 +11,7 @@ const MovieGallery = () => {
 
   const [filter, setFiler] = useState("")
   const [movies, setMovies] = useState([])
-  const [isloged, setIsLoged] = useState(false)
+  
 
   const [authData, login, logout] = useAuth()
 
