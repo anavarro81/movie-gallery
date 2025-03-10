@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { FaEye, FaEyeSlash, FaSpinner } from "react-icons/fa";
 import { IoAlertOutline } from "react-icons/io5";
-import {useToken} from '../Providers/TokenProvider'
+import {useAuth} from '../Providers/AuthProvider'
 import {useNavigate} from 'react-router-dom'
 
 import Header from '../Components/Header'
@@ -16,7 +16,7 @@ const Login = () => {
 
     const [errorLogin, setErrorLogin] = useState('')
 
-    const [token, setToken] = useToken()
+    const [authData, login, logout] = useAuth()
 
     const navigate = useNavigate()
     
@@ -30,8 +30,8 @@ const Login = () => {
             
             const resp = await axiosInstance.post('/user/login', loginData)    
             //const userLogged = await axios.post('http://localhost:3002/user/login', loginData)    
-            console.log('userLogged ', resp.data)
-            setToken(resp.data.token)
+            console.log('userLogged ', resp.data)            
+            login(resp.data.name, resp.data.token)
 
             navigate('/')
 

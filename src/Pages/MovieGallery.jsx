@@ -4,7 +4,7 @@ import {axiosInstance} from '../util/axios'
 import Header from '../Components/Header'
 import borrar_icon from '../assets/borrar_icon.svg'
 import NoLogin from './NoLogin'
-import { useToken } from '../Providers/TokenProvider';
+import { useAuth } from '../Providers/AuthProvider';
 
 
 const MovieGallery = () => {
@@ -13,13 +13,13 @@ const MovieGallery = () => {
   const [movies, setMovies] = useState([])
   const [isloged, setIsLoged] = useState(false)
 
-  const [token, setToken] = useToken()
+  const [authData, login, logout] = useAuth()
 
   const handleFilterChange = (filter) => () => {    
     setFiler(filter)  
   }
 
-  
+  console.log('authData: ', authData)
   
   // Actualizado si la película ha sido vista o no
   // Recorro el array de peliculas con un map, si la encuentro actualizo el campo watched, si no devuelve la pelicula. 
@@ -111,7 +111,7 @@ const MovieGallery = () => {
     <div className='container mx-auto px-4 py-8 '>        
         <Header />
 
-        {!token 
+        {!authData.token
         
           ? <NoLogin /> : 
           <> 

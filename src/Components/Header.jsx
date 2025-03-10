@@ -1,14 +1,14 @@
 import React, {useRef, useState, useEffect} from 'react'
-import {useToken} from '../Providers/TokenProvider' 
+import {useAuth} from '../Providers/AuthProvider' 
 
 const Header = () => {
 
-  const [token, setToken] = useToken()
+  const [authData, login, logout] = useAuth()
   const [showUserMenu, setShowUserMenu] = useState(false)
 
+  console.log('authData: ', authData)
+
   const userMenu = useRef(null)
-
-
 
   useEffect(() => {
 
@@ -28,7 +28,7 @@ const Header = () => {
 
   // Elimina el token de la sesión
   const deleteToken = () => {
-    setToken('')
+    logout()
   }
 
   return (
@@ -37,7 +37,7 @@ const Header = () => {
           <div className="flex items-center">            
             <h1 className="text-2xl font-bold"> <a href='/'> Movie DB </a>  </h1>
           </div>
-          {token ? (
+          {authData.token ? (
           // <nav>
           //   <ul className="flex space-x-4">
           //     <li><a href="/new-movie" className="hover:text-blue-200"> Nueva película </a></li>
@@ -51,7 +51,7 @@ const Header = () => {
               onClick={() => setShowUserMenu(true)}
               
             >
-              A
+              {authData.name[0].toUpperCase()}
             </button>
             
             {showUserMenu && (
