@@ -11,9 +11,10 @@ const MovieGallery = () => {
 
   const [filter, setFiler] = useState("")
   const [movies, setMovies] = useState([])
-  
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const [authData, login, logout] = useAuth()
+
 
   const handleFilterChange = (filter) => () => {    
     setFiler(filter)  
@@ -72,14 +73,21 @@ const MovieGallery = () => {
 
   const  getMovies = async () => {
     
-    console.log('Me conecto usando: ', axiosInstance.defaults.baseURL)     
+    const usedID = authData.id
     
     try {
       
-      const movies = await axiosInstance.get('/movies/all-movies')
+      const resp = await axiosInstance.get(`/user/user-movies/${usedID}`)
+
+      console.log('resp.data = ', resp.data)
+      
+      console.log('movies => ', resp.data.user.movies)
+
+      const movies = resp.data.user.movies
 
 
-      const moviesUpdated = movies.data.map((movie) => {
+
+      const moviesUpdated = movies.map((movie) => {
         return {
           ...movie,
           // Convierte la fecha a formato dd mes (abreviado) año

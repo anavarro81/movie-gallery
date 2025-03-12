@@ -31,7 +31,7 @@ const Login = () => {
             const resp = await axiosInstance.post('/user/login', loginData)    
             //const userLogged = await axios.post('http://localhost:3002/user/login', loginData)    
             console.log('userLogged ', resp.data)            
-            login(resp.data.name, resp.data.token)
+            login(resp.data.name, resp.data.token, resp.data.id)
 
             navigate('/')
 

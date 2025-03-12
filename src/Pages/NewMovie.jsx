@@ -3,17 +3,19 @@ import { TbReceiptYen } from 'react-icons/tb';
 import { axiosInstance } from '../util/axios';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {useAuth} from '../Providers/AuthProvider'
 
 
 const NewMovie = () => {    
 
     const [errors, setErrors] = useState({ title: '', cinema: '', releasedDate: '', genre: ''  });
-    const [data, setData] = useState({ title: '', cinema: '', releasedDate: '', genre: '', poster: '' });
+    const [data, setData] = useState({ title: '', cinema: '', releasedDate: '', genre: '', poster: '', userId: null });
     const [disableSubmit, setDisableSubmit] = useState(true);
     const [fileName, setFileName] = useState('');
 
     const fileInputRef = useRef(null)
     const navigate = useNavigate();
+    const [authData] = useAuth()
     
     
     // Para habiliar el boton guardar se comprueba cada vez que cambia data. 
@@ -44,6 +46,12 @@ const NewMovie = () => {
         try {
             
             // const movies = await axiosInstance.post('/movies/', data)    
+
+            setData({...data, userId: authData.id})
+
+            console.log('data: ', data);
+            
+            
 
             const movies = await axiosInstance.post('/movies/', data, {
                 headers: {

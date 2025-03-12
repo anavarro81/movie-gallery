@@ -1,21 +1,39 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     
-    // Definir estado global   
+    
 
-    const [authData, setAuthData] = useState({'name': null, token: null});   
+    const [authData, setAuthData] = useState({'name': null, token: null, id: null});   
 
-    const login = (name, token) => {
+    
+    // Para evitar que se piedan los datos de autenticación al recargar la página
+    // se guardan en el sessionStorage y si existen estos datos se cargan en el estado
+    useEffect(() => {
 
-        console.log(`[AuthProvider]: login name: ${name} '\n' ${token}`);
-        setAuthData({token, name});
+        const localUser = sessionStorage.getItem('user')
+
+        if (localUser) {
+            const user = JSON.parse(localUser)
+            setAuthData({name: user.name, token: user.token, id: user.id})
+        }
+
+    },[]);
+
+
+
+    const login = (name, token, id) => {
+
+        console.log(`[AuthProvider]: login name: ${name} '\n' token: ${token} '\n' id: ${id}`);
+        sessionStorage.setItem('user', JSON.stringify({name, token, id}));
+        setAuthData({token, name, id});
     }
     
     const logout = () => {  
-        setAuthData({token: null, name: null});
+        setAuthData({token: null, name: null, id: null});
+        sessionStorage.removeItem('user');
     }
 
     return (

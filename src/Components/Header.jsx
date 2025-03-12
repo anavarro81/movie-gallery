@@ -38,12 +38,9 @@ const Header = () => {
             <h1 className="text-2xl font-bold"> <a href='/'> Movie DB </a>  </h1>
           </div>
           {authData.token ? (
-          // <nav>
-          //   <ul className="flex space-x-4">
-          //     <li><a href="/new-movie" className="hover:text-blue-200"> Nueva película </a></li>
-          //     <button onClick={deleteToken}> <li><a href="/login" className="hover:text-blue-200"> Cerrar sesión </a></li> </button>
-          //   </ul>
-          // </nav>
+            <> 
+                  
+
           <div className='relative'> 
             <button 
               className='h-8 w-8 text-white bg-green-500 rounded-full'
@@ -70,12 +67,16 @@ const Header = () => {
               }}
             
               >
+
+                <button 
+                  className='block w-full p-4 text-black text-center hover:bg-gray-700 hover:text-white cursor-pointer'>                  
+                  <a href='/new-movie'> Nueva película </a>
+                </button>
+
                 <button 
                   className='block w-full p-4 text-black text-center hover:bg-gray-700 hover:text-white cursor-pointer'
                   onClick={deleteToken}
-
                   > 
-
                   Cerrar Sesion 
                 </button>
                 
@@ -86,7 +87,9 @@ const Header = () => {
             
             )}
 
-          </div>   
+          </div>  
+          
+          </>
 
           ) : (
           <nav>
