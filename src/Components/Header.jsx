@@ -58,10 +58,9 @@ const Header = () => {
               name='userButton'
               ref={userMenu}
               style={{
-                top: '100%',
-                left: '50%',
-                right: '20%',
-                transform: 'translateX(-50%) scale(1)',
+                top: '127%',                
+                right: '-11px',                
+                transform: 'translateX(0) scale(1)',
                 opacity: 1,
                 
               }}
