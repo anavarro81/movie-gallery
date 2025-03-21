@@ -20,7 +20,12 @@ const MovieGallery = () => {
     setFiler(filter)  
   }
 
-  console.log('authData: ', authData)
+  const handleChangeWatchedDate = (e) => {
+    
+    console.log('hice click en:', e.target);
+  }
+
+  
   
   // Actualizado si la película ha sido vista o no
   // Recorro el array de peliculas con un map, si la encuentro actualizo el campo watched, si no devuelve la pelicula. 
@@ -41,7 +46,7 @@ const MovieGallery = () => {
       })
     })
   
-    console.log('movies = ', movies)
+    
   
   }
 
@@ -73,18 +78,16 @@ const MovieGallery = () => {
 
   const  getMovies = async () => {
     
-    const usedID = authData.id
+    const usedID = authData.id    
     
     try {
       
+      
       const resp = await axiosInstance.get(`/user/user-movies/${usedID}`)
 
-      console.log('resp.data = ', resp.data)
+      console.log('peliculas recuperadas: ', resp.data)    
       
-      console.log('movies => ', resp.data.user.movies)
-
       const movies = resp.data.user.movies
-
 
 
       const moviesUpdated = movies.map((movie) => {
@@ -95,11 +98,11 @@ const MovieGallery = () => {
         }
       })
 
-      console.log('moviesUpdated: ', moviesUpdated)
+      
       setMovies(moviesUpdated)
       
     } catch (error) {
-      console.log('error leyendo movies : ', error)      
+      console.error('error leyendo movies : ', error)      
     }
     
 
@@ -107,9 +110,11 @@ const MovieGallery = () => {
 
 
   useEffect(() => {
-    
-    getMovies()
-  }, [])
+    // Nos aseguramos de que el id del usuario está disponible antes de recuperar las peliculas. 
+    if (authData.id) {    
+      getMovies()
+    }
+  }, [authData.id])
   
 
   
@@ -202,8 +207,11 @@ const MovieGallery = () => {
                       
                       
                   </button>
+                  
                   {movie.watched && (
-                    <p className='text-gray-600'>
+                    <p 
+                      className='text-gray-600'
+                      onClick={handleChangeWatchedDate}>
                       <span className='font-semibold'>Vista el:</span> {movie.watchedOn}
                     </p>
                   )}
